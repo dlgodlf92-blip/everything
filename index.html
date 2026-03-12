@@ -25,7 +25,7 @@
             transition: width 0.5s ease-in-out;
         }
 
-        /* 애니메이션 */
+        /* Animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -33,9 +33,9 @@
         .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4">
+<body class="min-h-screen flex flex-col items-center justify-center p-2 sm:p-4">
 
-    <!-- 시작 화면 -->
+    <!-- Start Screen -->
     <div id="start-screen" class="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center animate-fade-in">
         <div class="mb-6">
             <span class="inline-block p-3 rounded-full bg-purple-100 text-purple mb-4">
@@ -51,79 +51,80 @@
         </button>
     </div>
 
-    <!-- 게임 화면 -->
-    <div id="game-screen" class="hidden max-w-4xl w-full animate-fade-in">
-        <div class="text-center mb-8">
-            <h2 id="round-title" class="text-3xl font-bold text-purple mb-2">16강</h2>
+    <!-- Game Screen -->
+    <div id="game-screen" class="hidden max-w-5xl w-full animate-fade-in relative">
+        <div class="text-center mb-6 sm:mb-8">
+            <h2 id="round-title" class="text-2xl sm:text-3xl font-bold text-purple mb-2">16강</h2>
             <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2 max-w-xs mx-auto">
                 <div id="progress" class="signature-coral h-2.5 rounded-full progress-bar" style="width: 0%"></div>
             </div>
-            <p id="match-info" class="text-gray-500 font-medium">1 / 8 경기</p>
+            <p id="match-info" class="text-gray-500 font-medium text-sm sm:text-base">1 / 8 경기</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            <!-- 선택지 1 -->
-            <div onclick="selectChoice(0)" class="bg-white border-2 border-transparent hover:border-purple-300 rounded-2xl p-8 cursor-pointer transition-all card-hover flex flex-col items-center justify-center text-center min-h-[300px]">
-                <div class="w-16 h-16 rounded-full bg-purple-50 flex items-center justify-center mb-6">
-                    <span class="text-3xl">💡</span>
+        <!-- Main Selection Area: Forced 2 columns on all devices -->
+        <div class="grid grid-cols-2 gap-2 sm:gap-6 items-stretch relative">
+            <!-- Choice 1 -->
+            <div onclick="selectChoice(0)" class="bg-white border-2 border-transparent hover:border-purple-300 rounded-xl sm:rounded-2xl p-4 sm:p-8 cursor-pointer transition-all card-hover flex flex-col items-center justify-center text-center min-h-[250px] sm:min-h-[350px]">
+                <div class="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-purple-50 flex items-center justify-center mb-3 sm:mb-6">
+                    <span class="text-xl sm:text-3xl">💡</span>
                 </div>
-                <h3 id="choice-0-title" class="text-2xl font-bold text-gray-800 mb-3">높은 연봉</h3>
-                <p id="choice-0-desc" class="text-gray-500 text-lg">내가 일한 만큼 확실하게 돌아오는 금전적 보상</p>
+                <h3 id="choice-0-title" class="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3 leading-tight">높은 연봉</h3>
+                <p id="choice-0-desc" class="text-gray-500 text-xs sm:text-lg line-clamp-3">내가 일한 만큼 확실하게 돌아오는 금전적 보상</p>
             </div>
 
-            <!-- VS -->
-            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex w-12 h-12 bg-white border-4 border-gray-100 rounded-full items-center justify-center z-10 shadow-md">
-                <span class="font-bold text-gray-400">VS</span>
+            <!-- VS Badge (Positioned between cards) -->
+            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 bg-white border-2 sm:border-4 border-gray-100 rounded-full flex items-center justify-center z-10 shadow-md">
+                <span class="font-bold text-[10px] sm:text-base text-gray-400">VS</span>
             </div>
 
-            <!-- 선택지 2 -->
-            <div onclick="selectChoice(1)" class="bg-white border-2 border-transparent hover:border-coral-300 rounded-2xl p-8 cursor-pointer transition-all card-hover flex flex-col items-center justify-center text-center min-h-[300px]">
-                <div class="w-16 h-16 rounded-full bg-coral-50 flex items-center justify-center mb-6">
-                    <span class="text-3xl">🌿</span>
+            <!-- Choice 2 -->
+            <div onclick="selectChoice(1)" class="bg-white border-2 border-transparent hover:border-coral-300 rounded-xl sm:rounded-2xl p-4 sm:p-8 cursor-pointer transition-all card-hover flex flex-col items-center justify-center text-center min-h-[250px] sm:min-h-[350px]">
+                <div class="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-coral-50 flex items-center justify-center mb-3 sm:mb-6">
+                    <span class="text-xl sm:text-3xl">🌿</span>
                 </div>
-                <h3 id="choice-1-title" class="text-2xl font-bold text-gray-800 mb-3">저녁이 있는 삶</h3>
-                <p id="choice-1-desc" class="text-gray-500 text-lg">정시 퇴근이 보장되어 충분한 휴식과 수면을 취할 수 있는 환경</p>
+                <h3 id="choice-1-title" class="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3 leading-tight">저녁이 있는 삶</h3>
+                <p id="choice-1-desc" class="text-gray-500 text-xs sm:text-lg line-clamp-3">정시 퇴근이 보장되어 충분한 휴식과 수면을 취할 수 있는 환경</p>
             </div>
         </div>
     </div>
 
-    <!-- 결과 화면 -->
-    <div id="result-screen" class="hidden max-w-2xl w-full bg-white rounded-3xl shadow-2xl p-10 animate-fade-in">
-        <div class="text-center mb-10">
-            <h2 class="text-3xl font-bold text-gray-800 mb-2">나의 직무 가치관 TOP 3</h2>
-            <p class="text-gray-500">당신이 일터에서 가장 중요하게 생각하는 가치입니다.</p>
+    <!-- Result Screen -->
+    <div id="result-screen" class="hidden max-w-2xl w-full bg-white rounded-3xl shadow-2xl p-6 sm:p-10 animate-fade-in">
+        <div class="text-center mb-8 sm:mb-10">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">나의 직무 가치관 TOP 3</h2>
+            <p class="text-gray-500 text-sm sm:text-base">당신이 일터에서 가장 중요하게 생각하는 가치입니다.</p>
         </div>
 
-        <div class="space-y-6">
-            <!-- 1등 -->
-            <div class="relative bg-gradient-to-r from-purple-50 to-white p-6 rounded-2xl border-2 border-purple-200 flex items-center shadow-sm">
-                <div class="absolute -left-4 top-1/2 -translate-y-1/2 w-12 h-12 signature-purple text-white flex items-center justify-center rounded-full font-bold text-xl shadow-lg border-4 border-white">1</div>
-                <div class="ml-10">
-                    <h4 id="rank-1-title" class="text-2xl font-bold text-purple">높은 연봉</h4>
-                    <p id="rank-1-desc" class="text-gray-600 italic mt-1">"나의 가치를 숫자로 증명받는 것이 중요해요"</p>
+        <div class="space-y-4 sm:space-y-6">
+            <!-- Rank 1 -->
+            <div class="relative bg-gradient-to-r from-purple-50 to-white p-5 sm:p-6 rounded-2xl border-2 border-purple-200 flex items-center shadow-sm">
+                <div class="absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 signature-purple text-white flex items-center justify-center rounded-full font-bold text-lg sm:text-xl shadow-lg border-2 sm:border-4 border-white">1</div>
+                <div class="ml-8 sm:ml-10">
+                    <h4 id="rank-1-title" class="text-lg sm:text-2xl font-bold text-purple">높은 연봉</h4>
+                    <p id="rank-1-desc" class="text-gray-600 italic mt-1 text-xs sm:text-sm">"나의 가치를 숫자로 증명받는 것이 중요해요"</p>
                 </div>
             </div>
 
-            <!-- 2등 -->
-            <div class="relative bg-white p-6 rounded-2xl border-2 border-gray-100 flex items-center shadow-sm">
-                <div class="absolute -left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-400 text-white flex items-center justify-center rounded-full font-bold text-lg shadow-md border-4 border-white">2</div>
-                <div class="ml-10">
-                    <h4 id="rank-2-title" class="text-xl font-bold text-gray-800">저녁이 있는 삶</h4>
-                    <p id="rank-2-desc" class="text-gray-600 mt-1">"건강과 일의 균형을 지키는 것이 우선이에요"</p>
+            <!-- Rank 2 -->
+            <div class="relative bg-white p-5 sm:p-6 rounded-2xl border-2 border-gray-100 flex items-center shadow-sm">
+                <div class="absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-gray-400 text-white flex items-center justify-center rounded-full font-bold text-base sm:text-lg shadow-md border-2 sm:border-4 border-white">2</div>
+                <div class="ml-8 sm:ml-10">
+                    <h4 id="rank-2-title" class="text-base sm:text-xl font-bold text-gray-800">저녁이 있는 삶</h4>
+                    <p id="rank-2-desc" class="text-gray-600 mt-1 text-xs sm:text-sm">"건강과 일의 균형을 지키는 것이 우선이에요"</p>
                 </div>
             </div>
 
-            <!-- 3등 -->
-            <div class="relative bg-white p-6 rounded-2xl border-2 border-gray-100 flex items-center shadow-sm">
-                <div class="absolute -left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-orange-300 text-white flex items-center justify-center rounded-full font-bold text-lg shadow-md border-4 border-white">3</div>
-                <div class="ml-10">
-                    <h4 id="rank-3-title" class="text-xl font-bold text-gray-800">유연한 근무 형태</h4>
-                    <p id="rank-3-desc" class="text-gray-600 mt-1">"상황에 맞는 유연함이 업무 효율을 높여줘요"</p>
+            <!-- Rank 3 -->
+            <div class="relative bg-white p-5 sm:p-6 rounded-2xl border-2 border-gray-100 flex items-center shadow-sm">
+                <div class="absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-orange-300 text-white flex items-center justify-center rounded-full font-bold text-base sm:text-lg shadow-md border-2 sm:border-4 border-white">3</div>
+                <div class="ml-8 sm:ml-10">
+                    <h4 id="rank-3-title" class="text-base sm:text-xl font-bold text-gray-800">유연한 근무 형태</h4>
+                    <p id="rank-3-desc" class="text-gray-600 mt-1 text-xs sm:text-sm">"상황에 맞는 유연함이 업무 효율을 높여줘요"</p>
                 </div>
             </div>
         </div>
 
-        <button onclick="location.reload()" class="mt-12 w-full py-4 text-gray-400 font-medium hover:text-purple transition">
+        <button onclick="location.reload()" class="mt-8 sm:mt-12 w-full py-4 text-gray-400 font-medium hover:text-purple transition text-sm sm:text-base">
             다시 테스트하기
         </button>
     </div>
@@ -150,7 +151,7 @@
 
         let currentRoundItems = [];
         let nextRoundItems = [];
-        let losersOfSemiFinal = []; // 3위 결정을 위해 4강 탈락자 저장
+        let losersOfSemiFinal = [];
         let currentMatchIndex = 0;
         let finalRankings = [];
 
@@ -176,7 +177,6 @@
             const totalMatchesInRound = currentRoundItems.length / 2;
             document.getElementById('match-info').innerText = `${currentMatchIndex + 1} / ${totalMatchesInRound} 경기`;
             
-            // 프로그레스 바 계산
             const progress = (currentMatchIndex / totalMatchesInRound) * 100;
             document.getElementById('progress').style.width = `${progress}%`;
 
@@ -197,7 +197,6 @@
             if (count === 8) return "8강";
             if (count === 4) return "4강";
             if (count === 2) return "결승전";
-            if (count === 0) return "3위 결정전"; // 특수 상황
             return "월드컵";
         }
 
@@ -207,23 +206,19 @@
 
             nextRoundItems.push(winner);
             
-            // 4강일 경우 탈락자를 3위 결정전 후보로 저장
             if (currentRoundItems.length === 4) {
                 losersOfSemiFinal.push(loser);
             }
             
-            // 결승전일 경우 2등 확정
             if (currentRoundItems.length === 2) {
-                finalRankings[1] = loser; // 2위
-                finalRankings[0] = winner; // 1위
+                finalRankings[1] = loser;
+                finalRankings[0] = winner;
             }
 
             currentMatchIndex++;
 
             if (currentMatchIndex * 2 >= currentRoundItems.length) {
-                // 라운드 종료
                 if (nextRoundItems.length === 1) {
-                    // 모든 라운드 종료 -> 3위 결정전 진행 여부 확인
                     startThirdPlaceMatch();
                 } else {
                     currentRoundItems = [...nextRoundItems];
@@ -237,7 +232,6 @@
         }
 
         function startThirdPlaceMatch() {
-            // 3위 결정전 화면 구성
             document.getElementById('round-title').innerText = "3위 결정전";
             document.getElementById('match-info').innerText = "마지막 선택";
             document.getElementById('progress').style.width = "95%";
@@ -253,9 +247,8 @@
             document.getElementById('choice-1-desc').innerText = item2.desc;
             document.querySelector('#choice-1-title').previousElementSibling.innerText = item2.icon;
 
-            // 선택 함수 일시 변경
             window.selectChoice = function(index) {
-                finalRankings[2] = losersOfSemiFinal[index]; // 3위 확정
+                finalRankings[2] = losersOfSemiFinal[index];
                 showResults();
             };
         }
