@@ -42,7 +42,7 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(138, 112, 201, 0.9);
+            background: rgba(138, 112, 201, 0.95);
             z-index: 100;
             justify-content: center;
             align-items: center;
@@ -63,6 +63,9 @@
             font-size: 5rem;
             font-weight: 800;
             animation: zoomIn 1.5s ease-in-out forwards;
+        }
+        @media (max-width: 640px) {
+            .round-text { font-size: 3rem; }
         }
     </style>
 </head>
@@ -103,7 +106,7 @@
             <!-- Choice 1 -->
             <div onclick="selectChoice(0)" class="bg-white border-2 border-transparent hover:border-purple-300 rounded-xl sm:rounded-2xl p-4 sm:p-8 cursor-pointer transition-all card-hover flex flex-col items-center justify-center text-center min-h-[250px] sm:min-h-[350px]">
                 <div class="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-purple-50 flex items-center justify-center mb-3 sm:mb-6">
-                    <span class="text-xl sm:text-3xl">💡</span>
+                    <span id="choice-0-icon" class="text-xl sm:text-3xl">💡</span>
                 </div>
                 <h3 id="choice-0-title" class="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3 leading-tight">높은 연봉</h3>
                 <p id="choice-0-desc" class="text-gray-500 text-xs sm:text-lg line-clamp-3">내가 일한 만큼 확실하게 돌아오는 금전적 보상</p>
@@ -117,7 +120,7 @@
             <!-- Choice 2 -->
             <div onclick="selectChoice(1)" class="bg-white border-2 border-transparent hover:border-coral-300 rounded-xl sm:rounded-2xl p-4 sm:p-8 cursor-pointer transition-all card-hover flex flex-col items-center justify-center text-center min-h-[250px] sm:min-h-[350px]">
                 <div class="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-coral-50 flex items-center justify-center mb-3 sm:mb-6">
-                    <span class="text-xl sm:text-3xl">🌿</span>
+                    <span id="choice-1-icon" class="text-xl sm:text-3xl">🌿</span>
                 </div>
                 <h3 id="choice-1-title" class="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3 leading-tight">저녁이 있는 삶</h3>
                 <p id="choice-1-desc" class="text-gray-500 text-xs sm:text-lg line-clamp-3">정시 퇴근이 보장되어 충분한 휴식과 수면을 취할 수 있는 환경</p>
@@ -133,6 +136,7 @@
         </div>
 
         <div class="space-y-4 sm:space-y-6">
+            <!-- Rank 1 -->
             <div class="relative bg-gradient-to-r from-purple-50 to-white p-5 sm:p-6 rounded-2xl border-2 border-purple-200 flex items-center shadow-sm">
                 <div class="absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 signature-purple text-white flex items-center justify-center rounded-full font-bold text-lg sm:text-xl shadow-lg border-2 sm:border-4 border-white">1</div>
                 <div class="ml-8 sm:ml-10">
@@ -140,6 +144,7 @@
                     <p id="rank-1-desc" class="text-gray-600 italic mt-1 text-xs sm:text-sm"></p>
                 </div>
             </div>
+            <!-- Rank 2 -->
             <div class="relative bg-white p-5 sm:p-6 rounded-2xl border-2 border-gray-100 flex items-center shadow-sm">
                 <div class="absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-gray-400 text-white flex items-center justify-center rounded-full font-bold text-base sm:text-lg shadow-md border-2 sm:border-4 border-white">2</div>
                 <div class="ml-8 sm:ml-10">
@@ -147,6 +152,7 @@
                     <p id="rank-2-desc" class="text-gray-600 mt-1 text-xs sm:text-sm"></p>
                 </div>
             </div>
+            <!-- Rank 3 -->
             <div class="relative bg-white p-5 sm:p-6 rounded-2xl border-2 border-gray-100 flex items-center shadow-sm">
                 <div class="absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-orange-300 text-white flex items-center justify-center rounded-full font-bold text-base sm:text-lg shadow-md border-2 sm:border-4 border-white">3</div>
                 <div class="ml-8 sm:ml-10">
@@ -173,15 +179,15 @@
 
             if (type === 'click') {
                 oscillator.type = 'sine';
-                oscillator.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                oscillator.frequency.setValueAtTime(587.33, audioCtx.currentTime);
                 gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
                 oscillator.start();
                 oscillator.stop(audioCtx.currentTime + 0.1);
             } else if (type === 'round') {
                 oscillator.type = 'triangle';
-                oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-                oscillator.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.5); // C6
+                oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.5);
                 gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
                 oscillator.start();
@@ -213,6 +219,7 @@
         let losersOfSemiFinal = [];
         let currentMatchIndex = 0;
         let finalRankings = [];
+        let isThirdPlaceMatch = false;
 
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -236,32 +243,39 @@
             const overlayText = document.getElementById('round-overlay-text');
             overlayText.innerText = text;
             overlay.classList.remove('active');
-            void overlay.offsetWidth; // Trigger reflow
+            void overlay.offsetWidth;
             overlay.classList.add('active');
             playSound('round');
             setTimeout(() => { overlay.classList.remove('active'); }, 1500);
         }
 
         function updateMatchDisplay() {
-            const roundName = getRoundName(currentRoundItems.length);
-            document.getElementById('round-title').innerText = roundName;
+            let item1, item2;
             
-            const totalMatchesInRound = currentRoundItems.length / 2;
-            document.getElementById('match-info').innerText = `${currentMatchIndex + 1} / ${totalMatchesInRound} 경기`;
-            
-            const progress = (currentMatchIndex / totalMatchesInRound) * 100;
-            document.getElementById('progress').style.width = `${progress}%`;
-
-            const item1 = currentRoundItems[currentMatchIndex * 2];
-            const item2 = currentRoundItems[currentMatchIndex * 2 + 1];
+            if (isThirdPlaceMatch) {
+                document.getElementById('round-title').innerText = "3위 결정전";
+                document.getElementById('match-info').innerText = "최종 3위를 가리는 대결";
+                document.getElementById('progress').style.width = "95%";
+                item1 = losersOfSemiFinal[0];
+                item2 = losersOfSemiFinal[1];
+            } else {
+                const roundName = getRoundName(currentRoundItems.length);
+                document.getElementById('round-title').innerText = roundName;
+                const totalMatchesInRound = currentRoundItems.length / 2;
+                document.getElementById('match-info').innerText = `${currentMatchIndex + 1} / ${totalMatchesInRound} 경기`;
+                const progress = (currentMatchIndex / totalMatchesInRound) * 100;
+                document.getElementById('progress').style.width = `${progress}%`;
+                item1 = currentRoundItems[currentMatchIndex * 2];
+                item2 = currentRoundItems[currentMatchIndex * 2 + 1];
+            }
 
             document.getElementById('choice-0-title').innerText = item1.title;
             document.getElementById('choice-0-desc').innerText = item1.desc;
-            document.querySelector('#choice-0-title').previousElementSibling.innerText = item1.icon;
+            document.getElementById('choice-0-icon').innerText = item1.icon;
 
             document.getElementById('choice-1-title').innerText = item2.title;
             document.getElementById('choice-1-desc').innerText = item2.desc;
-            document.querySelector('#choice-1-title').previousElementSibling.innerText = item2.icon;
+            document.getElementById('choice-1-icon').innerText = item2.icon;
         }
 
         function getRoundName(count) {
@@ -274,62 +288,55 @@
 
         function selectChoice(index) {
             playSound('click');
+
+            if (isThirdPlaceMatch) {
+                // 3위 결정전 선택 완료
+                finalRankings[2] = losersOfSemiFinal[index];
+                setTimeout(() => showResults(), 400);
+                return;
+            }
+
             const winner = currentRoundItems[currentMatchIndex * 2 + index];
             const loser = currentRoundItems[currentMatchIndex * 2 + (index === 0 ? 1 : 0)];
 
             nextRoundItems.push(winner);
             
+            // 4강 탈락자 수집 (3위 결정전용)
             if (currentRoundItems.length === 4) {
                 losersOfSemiFinal.push(loser);
             }
             
+            // 결승전 결과 저장
             if (currentRoundItems.length === 2) {
-                finalRankings[1] = loser;
                 finalRankings[0] = winner;
+                finalRankings[1] = loser;
             }
 
             currentMatchIndex++;
 
             if (currentMatchIndex * 2 >= currentRoundItems.length) {
-                if (nextRoundItems.length === 1) {
-                    setTimeout(() => startThirdPlaceMatch(), 300);
-                } else {
-                    const nextRoundName = getRoundName(nextRoundItems.length);
+                // 라운드 종료
+                if (currentRoundItems.length === 2) {
+                    // 결승전이 끝났으면 3위 결정전으로 이동
                     setTimeout(() => {
-                        showRoundOverlay(nextRoundName);
+                        isThirdPlaceMatch = true;
+                        showRoundOverlay("3위 결정전");
+                        updateMatchDisplay();
+                    }, 500);
+                } else {
+                    // 다음 토너먼트 라운드 진행
+                    setTimeout(() => {
                         currentRoundItems = [...nextRoundItems];
                         nextRoundItems = [];
                         currentMatchIndex = 0;
+                        const nextName = getRoundName(currentRoundItems.length);
+                        showRoundOverlay(nextName);
                         updateMatchDisplay();
-                    }, 300);
+                    }, 500);
                 }
             } else {
                 updateMatchDisplay();
             }
-        }
-
-        function startThirdPlaceMatch() {
-            showRoundOverlay("3위 결정전");
-            document.getElementById('round-title').innerText = "3위 결정전";
-            document.getElementById('match-info').innerText = "마지막 선택";
-            document.getElementById('progress').style.width = "95%";
-
-            const item1 = losersOfSemiFinal[0];
-            const item2 = losersOfSemiFinal[1];
-
-            document.getElementById('choice-0-title').innerText = item1.title;
-            document.getElementById('choice-0-desc').innerText = item1.desc;
-            document.querySelector('#choice-0-title').previousElementSibling.innerText = item1.icon;
-
-            document.getElementById('choice-1-title').innerText = item2.title;
-            document.getElementById('choice-1-desc').innerText = item2.desc;
-            document.querySelector('#choice-1-title').previousElementSibling.innerText = item2.icon;
-
-            window.selectChoice = function(index) {
-                playSound('click');
-                finalRankings[2] = losersOfSemiFinal[index];
-                setTimeout(() => showResults(), 300);
-            };
         }
 
         function showResults() {
