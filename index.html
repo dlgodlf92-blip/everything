@@ -50,7 +50,7 @@
         }
         .round-transition.active {
             display: flex;
-            animation: overlayFade 1.5s ease-in-out forwards;
+            animation: overlayFade 1.6s ease-in-out forwards;
         }
         @keyframes overlayFade {
             0% { opacity: 0; }
@@ -62,7 +62,8 @@
             color: white;
             font-size: 5rem;
             font-weight: 800;
-            animation: zoomIn 1.5s ease-in-out forwards;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            animation: zoomIn 1.6s ease-in-out forwards;
         }
         @media (max-width: 640px) {
             .round-text { font-size: 3rem; }
@@ -220,6 +221,7 @@
         let currentMatchIndex = 0;
         let finalRankings = [];
         let isThirdPlaceMatch = false;
+        let isTransitioning = false; // 중복 클릭 방지 플래그
 
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -234,6 +236,8 @@
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
             currentRoundItems = shuffle([...initialItems]);
+            currentMatchIndex = 0;
+            isThirdPlaceMatch = false;
             showRoundOverlay("16강");
             updateMatchDisplay();
         }
@@ -246,7 +250,11 @@
             void overlay.offsetWidth;
             overlay.classList.add('active');
             playSound('round');
-            setTimeout(() => { overlay.classList.remove('active'); }, 1500);
+            isTransitioning = true;
+            setTimeout(() => { 
+                overlay.classList.remove('active'); 
+                isTransitioning = false;
+            }, 1600);
         }
 
         function updateMatchDisplay() {
@@ -287,15 +295,22 @@
         }
 
         function selectChoice(index) {
+            if (isTransitioning) return; // 애니메이션 도중 클릭 방지
+            
             playSound('click');
 
+            // 3위 결정전 모드일 때
             if (isThirdPlaceMatch) {
-                // 3위 결정전 선택 완료
                 finalRankings[2] = losersOfSemiFinal[index];
-                setTimeout(() => showResults(), 400);
+                isTransitioning = true;
+                setTimeout(() => {
+                    showResults();
+                    isTransitioning = false;
+                }, 400);
                 return;
             }
 
+            // 일반 토너먼트 모드
             const winner = currentRoundItems[currentMatchIndex * 2 + index];
             const loser = currentRoundItems[currentMatchIndex * 2 + (index === 0 ? 1 : 0)];
 
@@ -306,7 +321,7 @@
                 losersOfSemiFinal.push(loser);
             }
             
-            // 결승전 결과 저장
+            // 결승전일 경우 우승/준우승 저장
             if (currentRoundItems.length === 2) {
                 finalRankings[0] = winner;
                 finalRankings[1] = loser;
@@ -314,17 +329,18 @@
 
             currentMatchIndex++;
 
+            // 현재 라운드의 모든 경기가 끝났을 때
             if (currentMatchIndex * 2 >= currentRoundItems.length) {
-                // 라운드 종료
+                // 결승전이 끝났다면
                 if (currentRoundItems.length === 2) {
-                    // 결승전이 끝났으면 3위 결정전으로 이동
                     setTimeout(() => {
                         isThirdPlaceMatch = true;
+                        currentMatchIndex = 0; // 인덱스 리셋
                         showRoundOverlay("3위 결정전");
                         updateMatchDisplay();
                     }, 500);
                 } else {
-                    // 다음 토너먼트 라운드 진행
+                    // 다음 라운드 진행
                     setTimeout(() => {
                         currentRoundItems = [...nextRoundItems];
                         nextRoundItems = [];
